@@ -16,6 +16,7 @@
 // Homepage Route
 Route::group(['middleware' => ['web', 'checkblocked']], function () {
     Route::get('/', 'WelcomeController@welcome')->name('welcome');
+    Route::get('/{id}', 'WelcomeController@welcome2')->name('welcome2');
 });
 
 // Authentication Routes
@@ -129,3 +130,6 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
 });
 
 Route::redirect('/php', '/phpinfo', 301);
+
+//new
+// Route::post('/{id}', array('as' => 'form', 'uses'=>'WelcomeController@welcome'));

@@ -8,17 +8,25 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
+        
         <!-- Styles -->
         <style>
             html, body {
                 background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
+                color: #000000;
+                /* font-family: 'Raleway', sans-serif; */
+                /* font-weight: 100; */
+                /* height: 100vh; */
+                line-height: 24pt;
+                font-size: 16px;
                 margin: 0;
+            }
+            p { 
+                text-indent: 2em; 
             }
 
             .full-height {
@@ -69,7 +77,7 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div class="flex-center position-ref">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
@@ -80,20 +88,42 @@
                     @endif
                 </div>
             @endif
-            <div class="content">
-                <div class="title m-b-md">
-                    {!! trans('titles.app') !!}<br />
-                    <small>
-                        {{ trans('titles.app2', ['version' => config('settings.app_project_version')]) }}
-                    </small>
+        </div>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Book
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            @foreach($books as $key => $value)
+                                <li><a href=bookId={{$value->b}}>{{$value->n}}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="col-sm-3">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Version
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            @foreach($versions as $key => $value)
+                                <li><a href=bookId={{$value->id}}>{{$value->version}}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    @foreach($notes as $key => $value)
+                        <p class="text-sm-left">{{$value->t}}</p>
+                    @endforeach
+                </div>
+                <div class="col-sm-3"></div>
             </div>
         </div>
     </body>
