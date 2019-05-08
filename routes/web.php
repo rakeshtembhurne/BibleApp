@@ -16,7 +16,8 @@
 // Homepage Route
 Route::group(['middleware' => ['web', 'checkblocked']], function () {
     Route::get('/', 'WelcomeController@welcome')->name('welcome');
-    Route::get('/{id}', 'WelcomeController@welcome2')->name('welcome2');
+    Route::get('/{bookId}/{versionId}', 'WelcomeController@welcomeNextPage');
+    // Route::get('/certificate/pdf/{year}','PDFController@export_pdf');
 });
 
 // Authentication Routes
