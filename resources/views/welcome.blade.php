@@ -119,9 +119,13 @@
             <div class="row">
                 <div class="col-sm-3"></div>
                 <div class="col-sm-6">
-                    @foreach($notes as $key => $value)
-                        <p class="text-sm-left">{{$value->t}}</p>
-                    @endforeach
+                    @if(!is_null($dataFromTable))
+                        @foreach($dataFromTable as $key => $value)
+                            <p class="text-sm-left">{{$value->t}}</p>
+                        @endforeach
+                    @else
+                        <p>No Data Found</p>
+                    @endif
                 </div>
                 <div class="col-sm-3"></div>
             </div>

@@ -41,7 +41,14 @@ class WelcomeController extends Controller
             "116"=> "nlt",
             "130"=> "ojb"
         ];
-        return view('welcome', ['books'=>$books, 'notes'=>$notes, 'versions'=>$ver]);
+        return view('welcome', [
+            'books'=>$books, 
+            'notes'=>$notes, 
+            'versions'=>$ver,
+            'versionId'=>1,
+            'bookId'=>1,
+            'dataFromTable'=>null
+        ]);
     }
 
     public function welcomeNextPage(Request $request, $bookId, $versionId) {
@@ -68,15 +75,32 @@ class WelcomeController extends Controller
             "114"=> "nkjv",
             "116"=> "nlt",
         ];
+        $newArr = ["kjv"=> "t_kjv",
+            "AMPC"=> "t_ampc",
+            "ASV"=> "t_asv",
+            "books"=> "t_books",
+            "ceb"=> "t_ceb",
+            "cpdv"=> "t_cpdv"
+        ];
+        foreach ($ver as $key => $value) {
+            // dd($newArr[$value]);
+            if($key == $versionId) {
+                $table = $newArr[$value];
+                // dd($table);
+            }
+        }
+        // return $versions;
         $notes = DB::table('notes')->select('id','t')->where('book_id','=',$bookId)->where('verse_id','=',$versionId)->get();
         $books = DB::table('key_english')->select('n','b')->get();
-        $versions = DB::table('bible_version_key')->select('id','version')->get();
+        $versions = DB::table('bible_version_key')->select('id','table')->where('id','=',$versionId)->get();
+        $dataFromTable = DB::table($table)->select('id','t')->where('b','=',$bookId)->where('v','=',$versionId)->get();
         return view('welcome', [
             'books'=> $books, 
             'notes'=> $notes, 
             'versions'=> $ver,
             'bookId' => $bookId,
             'versionId' => $versionId,
+            'dataFromTable' => $dataFromTable
         ]);
     }
 }
