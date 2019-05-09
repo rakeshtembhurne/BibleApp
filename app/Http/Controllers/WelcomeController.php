@@ -62,25 +62,19 @@ class WelcomeController extends Controller
             "59"=> "ESV",
             "68"=> "GNT",
             "69"=> "GNTD",
-            "70"=> "gw",
-            "72"=> "hcsb",
-            "90"=> "leb",
-            "97"=> "msg",
-            "100"=> "NASB",
-            "105"=> "ncv",
-            "107"=> "net",
-            "110"=> "nirv-eng",
-            "111"=> "NIV11",
-            "113"=> "NIVUK",
-            "114"=> "nkjv",
-            "116"=> "nlt",
+            "70"=> "gw"
         ];
         $newArr = ["kjv"=> "t_kjv",
             "AMPC"=> "t_ampc",
             "ASV"=> "t_asv",
             "books"=> "t_books",
             "ceb"=> "t_ceb",
-            "cpdv"=> "t_cpdv"
+            "cpdv"=> "t_cpdv",
+            "DRC1752"=> "t_drc1752",
+            "ESV"=> "t_esv",
+            "GNT"=> "t_gnt",
+            "GNTD"=>"t_gntd",
+            "gw"=> "t-gw"
         ];
         foreach ($ver as $key => $value) {
             // dd($newArr[$value]);
