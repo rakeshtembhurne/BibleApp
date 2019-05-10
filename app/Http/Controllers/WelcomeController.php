@@ -1201,19 +1201,22 @@ class WelcomeController extends Controller
     public function welcomeNextPage(Request $request, $bookId, $versionId) {
         
         $table = $this->versionIdsToTable[$versionId];
-        $books = DB::table('key_english')->select('n','b')->get();
+        // $books = DB::table('key_english')->select('n','b')->get();
         $hasTable = Schema::hasTable($table);
         $dataFromTable = [];
         if ($hasTable) {
-            $dataFromTable = DB::table($table)
+            $dataFromTable = DB::table('t_gw')
                 ->select()
-                ->where('b','=',$bookId)
+                ->inRandomOrder()
+                ->limit(20)
+                // ->where('b','=',$bookId)
                 // ->where('v','=',$versionId)
                 ->get();
         }
+        // dd($dataFromTable);
 
         return view('welcome', [
-            'books'=> $books, 
+            'books'=> $this->books, 
             'versions'=> $this->versions,
             'bookId' => $bookId,
             'versionId' => $versionId,
