@@ -1205,16 +1205,14 @@ class WelcomeController extends Controller
         $hasTable = Schema::hasTable($table);
         $dataFromTable = [];
         if ($hasTable) {
-            $dataFromTable = DB::table('t_gw')
+            $dataFromTable = DB::table($table)
                 ->select()
                 ->inRandomOrder()
                 ->limit(20)
-                // ->where('b','=',$bookId)
-                // ->where('v','=',$versionId)
+                ->where('b','=',$bookId)
+                ->where('v','=',$versionId)
                 ->get();
         }
-        // dd($dataFromTable);
-
         return view('welcome', [
             'books'=> $this->books, 
             'versions'=> $this->versions,
