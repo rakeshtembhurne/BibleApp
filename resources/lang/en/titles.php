@@ -6,6 +6,7 @@ return [
     'app2'              => 'Auth :version',
     'home'              => 'Home',
     'login'             => 'Login',
+    'versions'          => 'Versions',
     'logout'            => 'Logout',
     'register'          => 'Register',
     'resetPword'        => 'Reset Password',

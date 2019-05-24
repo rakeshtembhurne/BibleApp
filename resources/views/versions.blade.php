@@ -68,18 +68,20 @@
 
 @extends('layouts.app')
 
+@section('template_title')
+    {{ trans('titles.activation') }}
+@endsection
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-10 offset-md-1">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    You are logged in!
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>The Bible in English</h1>
+                <div class="list-group" id="list-tab" role="tablist">
+                    @foreach($versions as $key => $value)
+                        <a class="list-group-item list-group-item-action" id="list-home-list" href=/{{$bookId}}/{{$key}} role="tab" aria-controls="home">{{$value}}</a>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
