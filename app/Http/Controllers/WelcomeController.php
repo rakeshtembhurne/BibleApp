@@ -1183,10 +1183,13 @@ class WelcomeController extends Controller
     {
         // $books = DB::table('key_english')->select('n','b')->get();
         // $versions = DB::table('bible_version_key')->select()->get();
+        
+        
         reset($this->books);
         $bookId = key($this->books);
         reset($this->versions);
         $versionId = key($this->versions);
+        // FIXME: Shouldn't be hardcoded
         $versionId = 1047;
 
         return view('welcome', [
@@ -1201,20 +1204,44 @@ class WelcomeController extends Controller
     public function welcomeNextPage(Request $request, $bookId, $versionId) {
         
         $table = $this->versionIdsToTable[$versionId];
-        // $books = DB::table('key_english')->select('n','b')->get();
         $hasTable = Schema::hasTable($table);
         $dataFromTable = [];
+        $books = $this->books;
+        $bookName = 'Book';
         if ($hasTable) {
+            $dbBooks = DB::table($table)
+                ->select('b')
+                ->distinct()
+                ->pluck('b')
+                ->toArray();
+
+            $books = array_filter($books, function($key) use ($dbBooks) {
+                return in_array($key, $dbBooks);
+            }, ARRAY_FILTER_USE_KEY);
+            
+            // If bookId doesn't match, one from URL, redirect;
+            if (!empty($dbBooks) && !in_array($bookId, $dbBooks)) {
+                $bookId = array_shift($dbBooks);
+                return redirect("/{$bookId}/{$versionId}");
+            }
+            
+            // DB::enableQueryLog();
             $dataFromTable = DB::table($table)
-                ->select()
-                ->inRandomOrder()
-                ->limit(20)
-                ->where('b','=',$bookId)
-                ->where('v','=',$versionId)
-                ->get();
+            ->select()
+            ->where('b','=',$bookId)
+            // ->where('v','=',$versionId)
+            ->orderBy('b', 'asc')
+            ->orderBy('v', 'asc')
+            ->orderBy('c', 'asc')
+            ->limit(20)
+            ->get();
+            // dd(DB::getQueryLog($dataFromTable));
+
+            $bookName = $books[$bookId];
         }
         return view('welcome', [
-            'books'=> $this->books, 
+            'bookName' => $bookName,
+            'books'=> $books, 
             'versions'=> $this->versions,
             'bookId' => $bookId,
             'versionId' => $versionId,

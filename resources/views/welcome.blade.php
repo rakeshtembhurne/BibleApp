@@ -74,9 +74,9 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-3 col-sm-offset-3">
                 <div class="dropdown">
-                    <button class="btn btn-default" type="button" data-toggle="dropdown">Book
+                    <button class="btn btn-default" type="button" data-toggle="dropdown">{{$bookName}}
                     <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         @foreach($books as $key => $value)
@@ -103,7 +103,9 @@
             <div class="col-sm-6">
                 @if(($dataFromTable))
                     @foreach($dataFromTable as $key => $value)
-                        <p class="text-sm-left">{{$value->t}}</p>
+                        <p class="text-sm-left">
+                        <?= str_replace('<red>', '<span class="text-danger">', str_replace('</red>', '</span>', $value->t)) ?>
+                        </p>
                     @endforeach
                 @else
                     <p>No Data Found</p>
