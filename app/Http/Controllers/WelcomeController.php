@@ -1192,7 +1192,10 @@ class WelcomeController extends Controller
         // FIXME: Shouldn't be hardcoded
         $versionId = 1047;
 
+        $bookName = 'Book';
+
         return view('welcome', [
+            'bookName' => $bookName,
             'books' => $this->books, 
             'versions' => $this->versions,
             'versionId' => $versionId,
