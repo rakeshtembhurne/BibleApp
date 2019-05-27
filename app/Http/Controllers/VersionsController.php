@@ -68,7 +68,8 @@ class VersionsController extends Controller
         ];
         return view('versions', [
             'versions' => $versions,
-            'bookId' => 1
+            'bookId' => 1,
+            'chapterId' => 1
         ]);
     }
 }

@@ -78,7 +78,7 @@
                 <h1>The Bible in English</h1>
                 <div class="list-group" id="list-tab" role="tablist">
                     @foreach($versions as $key => $value)
-                        <a class="list-group-item list-group-item-action" id="list-home-list" href=/{{$bookId}}/{{$key}} role="tab" aria-controls="home">{{$value}}</a>
+                        <a class="list-group-item list-group-item-action" id="list-home-list" href=/{{$key}}/{{$bookId}}/{{$chapterId}} role="tab" aria-controls="home">{{$value}}</a>
                     @endforeach
                 </div>
             </div>
