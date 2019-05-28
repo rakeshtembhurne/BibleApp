@@ -80,7 +80,7 @@
                     <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         @foreach($books as $key => $value)
-                            <li><a href="/{{$versionId}}/{{$key}}/{{$chapterId}}">{{$value}}</a></li>
+                            <li><a href="/{{$versionId}}/{{$key}}/1">{{$value}}</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -96,7 +96,7 @@
                     </ul>
                 </div> -->
                 <div class="dropdown">
-                    <button class="btn btn-default" type="button" data-toggle="dropdown">Chapters
+                    <button class="btn btn-default" type="button" data-toggle="dropdown">{{$chapterId}}
                     <span class="caret"></span></button>
                     <ul class="dropdown-menu">
                         @foreach($chapterIds as $key => $value)
