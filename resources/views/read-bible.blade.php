@@ -65,6 +65,11 @@
         margin-bottom: 30px;
     }
     .fb_iframe_widget{overflow: hidden;}
+
+    .fb-comments, .fb_iframe_widget_fluid_desktop iframe {
+        width: 100%;
+        min-width: 100% !important;
+    }
 </style>
 
 @extends('layouts.app')
@@ -126,7 +131,7 @@
         <div class="row">
             <div class="col-sm-3"></div>
             <div class="col-sm-6">
-                <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-width="" data-numposts="5"></div>
+                <div class="fb-comments" data-href="/{{$versionId}}/{{$bookId}}/{{$chapterId}}" data-width="100%" data-numposts="5"></div>
             </div>
             <div class="col-sm-3"></div>
         </div>
