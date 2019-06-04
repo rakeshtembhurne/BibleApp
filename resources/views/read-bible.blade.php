@@ -1,8 +1,13 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+<!-- for dynodropdwon -->
+<link rel="stylesheet" href="{{ URL::asset('/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('/css/jquery.dyndropdown.css') }}">
+<script src="{{ URL::asset('/js/jquery.dyndropdown.js') }}"></script>
 
 <style>
     html, body {
@@ -81,35 +86,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-3 col-sm-offset-3">
-                <div class="dropdown">
-                    <button class="btn btn-default" type="button" data-toggle="dropdown">{{$bookName}}
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        @foreach($books as $key => $value)
-                            <li><a href="/{{$versionId}}/{{$key}}/1">{{$value}}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <!-- <div class="dropdown">
-                    <button class="btn btn-default" type="button" data-toggle="dropdown">Version
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        @foreach($versions as $key => $value)
-                            <li><a href=/{{$bookId}}/{{$key}}>{{$value}}</a></li>
-                        @endforeach
-                    </ul>
-                </div> -->
-                <div class="dropdown">
-                    <button class="btn btn-default" type="button" data-toggle="dropdown">{{$chapterId}}
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu">
-                        @foreach($chapterIds as $key => $value)
-                            <li><a href=/{{$versionId}}/{{$bookId}}/{{$value}}>{{$value}}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
+                <div id="bookDropDown"></div> 
             </div>
         </div>
         <br>
@@ -137,3 +114,42 @@
         </div>
     </div>
 @endsection
+
+<script type="text/javascript">
+    var $ = jQuery;
+    var bookWithChapters = @json($bookWithChapters);
+    (function($) {
+        $( document ).ready(function() {
+            var books = {};
+            for(t in bookWithChapters) {
+                books[t] = {
+                    name: t,
+                    values: {}
+                };
+                for(n in bookWithChapters[t]) {
+                    books[t].values[n] = bookWithChapters[t][n];
+                }                
+            }
+            var simple = $('#bookDropDown').dyndropdown();
+            simple.setStructure(JSON.stringify(books));
+        });
+    })(jQuery);
+
+    (function($) {
+        $( document ).ready(function() {
+            var bookNames = @json($books);
+            for(t in bookWithChapters) {
+                var bookName = t;
+                for(c in bookWithChapters[t]) {
+                    for(b in bookNames) {
+                        if(bookNames[b] == t) {
+                            var chap = bookWithChapters[t][c]-1;
+                            $("#dyndropdownop_"+t+"___"+chap+" > a").attr('href','/{{$versionId}}/'+b+'/'+bookWithChapters[t][c]);
+                            $(".dropdown-toggle").text('{{$bookName}}');
+                        }
+                    }
+                }
+            }
+        });
+    })(jQuery);
+</script>

@@ -1197,19 +1197,28 @@ class ReadBibleController extends Controller
             $books = array_filter($books, function($key) use ($dbBooks) {
                 return in_array($key, $dbBooks);
             }, ARRAY_FILTER_USE_KEY);
-            
+
             // If bookId doesn't match, one from URL, redirect;
             if (!empty($dbBooks) && !in_array($bookId, $dbBooks)) {
                 $bookId = array_shift($dbBooks);
                 return redirect("{$versionId}/{$bookId}/{$chapterId}");
             }
 
+            $booksId = array_keys($books);
             $chapterIds = DB::table($table)
-            ->select('c')
-            ->where('b','=',$bookId)
-            ->distinct()
-            ->pluck('c')
-            ->toArray();
+            ->select('c','b')
+            ->whereIn('b', $booksId)
+            ->get();
+            $bookWithChapters = array();
+            foreach ($chapterIds as $key => $value) {
+                $n = array();
+                $booksIdLen = count($booksId);
+                for ($i=0; $i < $booksIdLen; $i++) { 
+                    if($booksId[$i] == $value->b) {
+                        $bookWithChapters[$books[$value->b]] = range(1,$value->c);
+                    }
+                }
+            }
             // DB::enableQueryLog();
             $dataFromTable = DB::table($table)
             ->select()
@@ -1232,7 +1241,8 @@ class ReadBibleController extends Controller
             'versionId' => $versionId,
             'chapterId' => $chapterId,
             'chapterIds' => $chapterIds,
-            'dataFromTable' => $dataFromTable
+            'dataFromTable' => $dataFromTable,
+            'bookWithChapters' => $bookWithChapters
         ]);
     }
 }
