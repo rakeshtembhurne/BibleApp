@@ -75,6 +75,10 @@
         width: 100%;
         min-width: 100% !important;
     }
+    .dropdown-submenu .dyndropdown-selectable {
+        width: 50px;
+        float: left;
+    }
 </style>
 
 @extends('layouts.app')
@@ -150,6 +154,8 @@
                     }
                 }
             }
+            // $("#dyndropdown_menu").prepend( "<b>Books</b>" );
+            // $(".dropdown-menu .dropdown-menu-f").prepend( "<b>Chapters</b>" );
         });
     })(jQuery);
 </script>
